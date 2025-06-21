@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from config import SQLALCHEMY_DATABASE_URI, JWT_SECRET_KEY
+from server.config import SQLALCHEMY_DATABASE_URI, JWT_SECRET_KEY
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -18,13 +18,11 @@ def create_app():
     migrate.init_app(app, db)
     jwt.init_app(app)
 
-    # Import blueprints
-    from controllers.auth_controller import auth_bp
-    from controllers.guest_controller import guest_bp
-    from controllers.episode_controller import episode_bp
-    from controllers.appearance_controller import appearance_bp
+    from server.controllers.auth_controller import auth_bp
+    from server.controllers.guest_controller import guest_bp
+    from server.controllers.episode_controller import episode_bp
+    from server.controllers.appearance_controller import appearance_bp
 
-    # Register blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(guest_bp)
     app.register_blueprint(episode_bp)
