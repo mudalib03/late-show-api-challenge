@@ -18,12 +18,10 @@ def create_appearance():
     if rating is None or not (1 <= rating <= 5):
         return jsonify({"error": "Rating must be between 1 and 5"}), 400
 
-    # Validate guest exists
     guest = Guest.query.get(guest_id)
     if not guest:
         return jsonify({"error": "Guest not found"}), 404
 
-    # Validate episode exists
     episode = Episode.query.get(episode_id)
     if not episode:
         return jsonify({"error": "Episode not found"}), 404

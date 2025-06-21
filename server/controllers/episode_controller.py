@@ -1,7 +1,7 @@
-from flask import Blueprint, jsonify, abort
+from flask import Blueprint, jsonify
 from flask_jwt_extended import jwt_required
 from server.models.episode import Episode
-from server.models.appearance import Appearance
+from server.app import db
 
 episode_bp = Blueprint("episode", __name__)
 
@@ -34,8 +34,6 @@ def get_episode(id):
 @jwt_required()
 def delete_episode(id):
     ep = Episode.query.get_or_404(id)
-    # Delete cascade should delete appearances
-    from server.app import db
     db.session.delete(ep)
     db.session.commit()
     return jsonify({"message": f"Episode {id} deleted"}), 200
