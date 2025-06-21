@@ -18,6 +18,10 @@ def create_app():
     migrate.init_app(app, db)
     jwt.init_app(app)
 
+    @app.route("/")
+    def index():
+        return "Late Show API is running!"
+
     from server.controllers.auth_controller import auth_bp
     from server.controllers.guest_controller import guest_bp
     from server.controllers.episode_controller import episode_bp
